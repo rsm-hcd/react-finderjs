@@ -1,0 +1,26 @@
+{
+  "name": "react-finderjs",
+  "version": "1.0.0",
+  "description": "A React wrapper around FinderJS",
+  "main": "src/react-finderjs.js",
+  "scripts": {
+    "build": "rm -rf dist/** && cp -a src/* dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andculturecode/react-finderjs.git"
+  },
+  "author": "AndcultureCode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andculturecode/react-finderjs/issues"
+  },
+  "homepage": "https://github.com/andculturecode/react-finderjs",
+  "devDependencies": {
+    "react": "^15.6.1"
+  },
+  "dependencies": {
+    "finderjs": "^1.1.3"
+  }
+}
