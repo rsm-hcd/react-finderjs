@@ -2,10 +2,13 @@
   "name": "react-finderjs",
   "version": "1.0.0",
   "description": "A React wrapper around FinderJS",
-  "main": "src/react-finderjs.js",
+  "main": "dist/react-finder.js",
   "scripts": {
-    "build": "rm -rf dist/** && cp -a src/* dist/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir dist",
+    "clean": "rm -rf dist",
+    "publish": "npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "babel src --out-dir dist --watch"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,7 @@
     "react": "^15.6.1"
   },
   "dependencies": {
-    "finderjs": "^1.1.3"
+    "finderjs": "^1.1.3",
+    "uuid": "^3.1.0"
   }
 }
