@@ -78,6 +78,10 @@ var ReactFinder = function (_Component) {
                 className += this.props.className;
             }
 
+            if (this._finder == undefined) {
+                return _react2.default.createElement('div', null);
+            }
+
             return _react2.default.createElement('div', {
                 className: className,
                 dangerouslySetInnerHTML: {
@@ -116,7 +120,7 @@ var ReactFinder = function (_Component) {
     }, {
         key: '_initializeFinder',
         value: function _initializeFinder() {
-            if (this._finder == undefined) {
+            if (this._finder == undefined && this.props.data != undefined) {
                 var component = document.getElementById(this._componentId);
                 if (component == undefined) {
                     return;

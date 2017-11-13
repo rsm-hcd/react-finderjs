@@ -41,6 +41,10 @@ class ReactFinder extends Component {
             className += this.props.className
         }
 
+        if (this._finder == undefined) {
+            return (<div />);
+        }
+
         return (
             <div
                 className = {className}
@@ -77,7 +81,7 @@ class ReactFinder extends Component {
     // ---------------
 
     _initializeFinder() {
-        if (this._finder == undefined) {
+        if (this._finder == undefined && this.props.data != undefined) {
             const component = document.getElementById(this._componentId);
             if (component == undefined) {
                 return;
