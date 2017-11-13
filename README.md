@@ -11,7 +11,9 @@ npm install -save react-finderjs
 ## Usage
 
 ```
-const yourData = [
+import * as ReactFinder from "react-finderjs";
+
+const data = [
   {
     id: 1,
     label: 'Label A'
@@ -33,7 +35,7 @@ const yourData = [
 
 <ReactFinder
   className = ""
-  data = {yourData} />
+  data = {data} />
 
 ```
 
