@@ -1,6 +1,6 @@
 # react-finderjs
 
-React componet wrapper for [http://mynameistecho.github.io/finderjs/](FinderJs) javascript component
+React componet wrapper for [https://mynameistechno.github.io/finderjs/](FinderJs) javascript component
 
 ## Installation
 
