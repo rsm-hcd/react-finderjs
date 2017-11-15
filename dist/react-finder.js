@@ -32,6 +32,7 @@ var defaultProps = {
     className: "",
     createItemContent: undefined,
     data: [],
+    disableAutoScroll: false,
     onItemSelected: null,
     onLeafSelected: null,
     onColumnCreated: null
@@ -123,11 +124,11 @@ var ReactFinder = function (_Component) {
         key: "_initializeFinder",
         value: function _initializeFinder() {
             if (this._finder == undefined && this.props.data != undefined) {
-                var component = document.getElementById(this._componentId);
-                if (component == undefined) {
+                this._container = document.getElementById(this._componentId);
+                if (this._container == undefined) {
                     return;
                 }
-                this._finder = Finder.default(component, this.props.data, {
+                this._finder = Finder.default(this._container, this.props.data, {
                     className: this.props.className,
                     createItemContent: this.props.createItemContent
                 });
@@ -158,6 +159,10 @@ var ReactFinder = function (_Component) {
     }, {
         key: "_onCreateColumn",
         value: function _onCreateColumn(item) {
+            if (this._container != undefined && !this.props.disableAutoScroll) {
+                this._container.scrollLeft = this._container.scrollWidth - this._container.clientWidth;
+            }
+
             if (this.props.onColumnCreated != undefined) {
                 this.props.onColumnCreated(item);
             }

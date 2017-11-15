@@ -44,6 +44,7 @@ Parameter | Type | Description
 className | string | Custom class name for the wrapping div
 createItemContent | Function | Define how each item is rendered. Parameters (config, item). The first parameter passed in is the config object and the second is the item object that is currently being iterated on. It should return an HTML Element.
 data| Array | Data source is a array of objects
+disableAutoScroll| Boolean | Disable automatically scrolling to newly created column on parent click (default: false)
 onItemSelected| Function | Callback function when item selected. Parameters: (item, domItem)
 onLeafSelected| Function | Callback function when leaf node selected. Parameters: (item)
 onColumnCreated| Function | Callback function when column is created. Parameters: (domColumn)
