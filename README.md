@@ -5,7 +5,7 @@ React componet wrapper for [http://mynameistecho.github.io/finderjs/](FinderJs) 
 ## Installation
 
 ```bash
-npm install -save react-finderjs
+npm install --save react-finderjs
 ```
 
 ## Usage
@@ -42,11 +42,11 @@ const data = [
 Parameter | Type | Description
 ----------|------|------------
 className | string | Custom class name for the wrapping div
-createItemContent | Function | Define how each item is rendered. The first parameter passed in is the config object and the second is the item object that is currently being iterated on. It should return an HTML Element.
+createItemContent | Function | Define how each item is rendered. Parameters (config, item). The first parameter passed in is the config object and the second is the item object that is currently being iterated on. It should return an HTML Element.
 data| Array | Data source is a array of objects
-onItemSelected| Function | Callback function when item selected
-onLeafSelected| Function | Callback function when leaf node selected
-onColumnCreated| Function | Callback function when column is created
+onItemSelected| Function | Callback function when item selected. Parameters: (item, domItem)
+onLeafSelected| Function | Callback function when leaf node selected. Parameters: (item)
+onColumnCreated| Function | Callback function when column is created. Parameters: (domColumn)
 
 ### Data
 
@@ -58,31 +58,27 @@ If an object has a `url` property it will be treated slightly differently: the a
 
 ### Events
 
-`finder` will return an EventEmitter which allows you to listen to (and emit) the following events:
+`react-finderjs` has a few events you can provide callbacks for, as well as some public methods to trigger events in the native finderjs library:
 
-Event                    | Description
+Property Callback        | Description
 -------------------------|-------------------------
-`item-selected`          | An item was selected (clicked or keyboard arrow)
-`leaf-selected`          | A leaf node was selected
-`create-column `         | Append a column to the container
-`column-created`         | A column was appended to the container
+`onItemSelected`         | An item was selected (clicked or keyboard arrow)
+`onLeafSelected`         | A leaf node was selected
+`onColumnCreated`        | A column was appended to the container
+
+
+Public Event             | Description
+-------------------------| ------------------------
+`createColumn`           | Append a column to the container
 `navigate`               | Navigate the finder by going `up`, `down`, `right`, or `left`
 
-See the examples for more [details](example).
-
-### Options
-
-Option | Type |Description
--------|------|-----------
-`className`| Object | Override the [default classnames](https://github.com/mynameistechno/finderjs/blob/master/index.js#L14) by populating this object
-`createItemContent` | Function | Define how each item is rendered. The first parameter passed in is the `config` object and the second is the `item` object that is currently being iterated on. It should return an HTML Element.
 
 ## Project commands
 
-Command       | Description
---------------|-------------------------------------
+Command          | Description
+-----------------|-------------------------------------
 `npm run build`  | Build /dist finderjs
-`npm run clean`| Deletes /dist folder for build
-`npm run publish`  | Run clean & build commands
+`npm run clean`  | Deletes /dist folder for build
+`npm run publish`| Run clean & build commands
 `npm run test`   | Run test (not completed)
-`npm run watch`   | Run watch for file changes
+`npm run watch`  | Run watch for file changes

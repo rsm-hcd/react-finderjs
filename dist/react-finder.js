@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -6,19 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _bindAll = require('bind-all');
-
-var _bindAll2 = _interopRequireDefault(_bindAll);
-
-var _finderjs = require('finderjs');
+var _finderjs = require("finderjs");
 
 var Finder = _interopRequireWildcard(_finderjs);
 
-var _v = require('uuid/v4');
+var _v = require("uuid/v4");
 
 var uuidv4 = _interopRequireWildcard(_v);
 
@@ -52,25 +48,35 @@ var ReactFinder = function (_Component) {
         _this._componentId = uuidv4.default();
         _this._finder = undefined;
 
-        (0, _bindAll2.default)(_this);
+        _this.createColumn = _this.createColumn.bind(_this);
+        _this.navigate = _this.navigate.bind(_this);
+        _this._initializeFinder = _this._initializeFinder.bind(_this);
+        _this._onItemSelected = _this._onItemSelected.bind(_this);
+        _this._onLeafSelected = _this._onLeafSelected.bind(_this);
+        _this._onCreateColumn = _this._onCreateColumn.bind(_this);
         return _this;
     }
 
     _createClass(ReactFinder, [{
-        key: 'componentDidMount',
+        key: "componentDidMount",
         value: function componentDidMount() {
             this._initializeFinder();
         }
     }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            if (prevProps.data !== this.props.data) {
+        key: "componentWillUpdate",
+        value: function componentWillUpdate(nextProps) {
+            if (nextProps.data !== this.props.data) {
+                this._componentId = uuidv4.default();
                 this._finder = undefined;
             }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps, prevState) {
             this._initializeFinder();
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             var className = "c-finder ";
 
@@ -78,14 +84,10 @@ var ReactFinder = function (_Component) {
                 className += this.props.className;
             }
 
-            if (this._finder == undefined) {
-                return _react2.default.createElement('div', null);
-            }
-
-            return _react2.default.createElement('div', {
+            return _react2.default.createElement("div", {
                 className: className,
                 dangerouslySetInnerHTML: {
-                    __html: '<div id="' + this._componentId + '"></div>'
+                    __html: "<div id=\"" + this._componentId + "\"></div>"
                 }
             });
         }
@@ -95,7 +97,7 @@ var ReactFinder = function (_Component) {
         // --------------
 
     }, {
-        key: 'createColumn',
+        key: "createColumn",
         value: function createColumn(item) {
             if (this._finder == undefined || item == undefined) {
                 return;
@@ -104,7 +106,7 @@ var ReactFinder = function (_Component) {
             this._finder.emit('create-column', item);
         }
     }, {
-        key: 'navigate',
+        key: "navigate",
         value: function navigate(direction) {
             if (this._finder == undefined || direction == undefined || direction.length === 0) {
                 return;
@@ -118,7 +120,7 @@ var ReactFinder = function (_Component) {
         // ---------------
 
     }, {
-        key: '_initializeFinder',
+        key: "_initializeFinder",
         value: function _initializeFinder() {
             if (this._finder == undefined && this.props.data != undefined) {
                 var component = document.getElementById(this._componentId);
@@ -140,21 +142,21 @@ var ReactFinder = function (_Component) {
         // --------------
 
     }, {
-        key: '_onItemSelected',
+        key: "_onItemSelected",
         value: function _onItemSelected(item) {
-            if (this.props.onItemSelected != undefined) {
-                this.props.onItemSelected(item);
+            if (this.props.onItemSelected != undefined && item != undefined && item.item != undefined && item.item._item != undefined) {
+                this.props.onItemSelected(item.item._item, item);
             }
         }
     }, {
-        key: '_onLeafSelected',
+        key: "_onLeafSelected",
         value: function _onLeafSelected(item) {
             if (this.props.onLeafSelected != undefined) {
                 this.props.onLeafSelected(item);
             }
         }
     }, {
-        key: '_onCreateColumn',
+        key: "_onCreateColumn",
         value: function _onCreateColumn(item) {
             if (this.props.onColumnCreated != undefined) {
                 this.props.onColumnCreated(item);

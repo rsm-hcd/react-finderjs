@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import bindAll from 'bind-all';
 import * as Finder from "finderjs" ;
 import * as uuidv4 from "uuid/v4";
 
@@ -20,17 +19,26 @@ class ReactFinder extends Component {
         this._componentId = uuidv4.default();
         this._finder = undefined;
 
-        bindAll(this);
+        this.createColumn      = this.createColumn.bind(this);
+        this.navigate          = this.navigate.bind(this);
+        this._initializeFinder = this._initializeFinder.bind(this);
+        this._onItemSelected   = this._onItemSelected.bind(this);
+        this._onLeafSelected   = this._onLeafSelected.bind(this);
+        this._onCreateColumn   = this._onCreateColumn.bind(this);
     }
 
     componentDidMount() {
         this._initializeFinder();
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.data !== this.props.data) {
+    componentWillUpdate(nextProps) {
+        if (nextProps.data !== this.props.data) {
+            this._componentId = uuidv4.default();
             this._finder = undefined;
         }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
         this._initializeFinder();
     }
 
@@ -39,10 +47,6 @@ class ReactFinder extends Component {
 
         if (this.props.className != undefined) {
             className += this.props.className
-        }
-
-        if (this._finder == undefined) {
-            return (<div />);
         }
 
         return (
@@ -101,8 +105,8 @@ class ReactFinder extends Component {
     // --------------
 
     _onItemSelected(item) {
-        if (this.props.onItemSelected != undefined) {
-            this.props.onItemSelected(item);
+        if (this.props.onItemSelected != undefined && item != undefined && item.item != undefined && item.item._item != undefined) {
+            this.props.onItemSelected(item.item._item, item);
         }
     }
 
