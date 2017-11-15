@@ -35,7 +35,8 @@ var defaultProps = {
     disableAutoScroll: false,
     onItemSelected: null,
     onLeafSelected: null,
-    onColumnCreated: null
+    onColumnCreated: null,
+    value: null
 };
 
 var ReactFinder = function (_Component) {
@@ -51,10 +52,12 @@ var ReactFinder = function (_Component) {
 
         _this.createColumn = _this.createColumn.bind(_this);
         _this.navigate = _this.navigate.bind(_this);
+        _this._getSelectedValuePath = _this._getSelectedValuePath.bind(_this);
         _this._initializeFinder = _this._initializeFinder.bind(_this);
         _this._onItemSelected = _this._onItemSelected.bind(_this);
         _this._onLeafSelected = _this._onLeafSelected.bind(_this);
         _this._onCreateColumn = _this._onCreateColumn.bind(_this);
+        _this._selectValue = _this._selectValue.bind(_this);
         return _this;
     }
 
@@ -121,6 +124,38 @@ var ReactFinder = function (_Component) {
         // ---------------
 
     }, {
+        key: "_getSelectedValuePath",
+        value: function _getSelectedValuePath(value, data) {
+            var _this2 = this;
+
+            var result = [];
+
+            if (data == undefined) {
+                data = this.props.data;
+            }
+
+            var i = data.findIndex(function (e) {
+                return e.id === value.id;
+            });
+            if (i > -1) {
+                result.push(i);
+                return result;
+            }
+
+            data.some(function (e, i) {
+                if (e.children != undefined && e.children.length > 0) {
+                    var ci = _this2._getSelectedValuePath(value, e.children);
+                    if (ci.length > 0) {
+                        result = result.concat([i], ci);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            return result;
+        }
+    }, {
         key: "_initializeFinder",
         value: function _initializeFinder() {
             if (this._finder == undefined && this.props.data != undefined) {
@@ -135,6 +170,30 @@ var ReactFinder = function (_Component) {
                 this._finder.on('leaf-selected', this._onLeafSelected);
                 this._finder.on('item-selected', this._onItemSelected);
                 this._finder.on('column-created', this._onCreateColumn);
+
+                this._selectValue();
+            }
+        }
+    }, {
+        key: "_selectValue",
+        value: function _selectValue() {
+            var _this3 = this;
+
+            if (this._container != undefined && this.props.value != undefined && this.props.value.id != undefined && this.props.data != undefined) {
+                var path = this._getSelectedValuePath(this.props.value);
+                var itemData = {
+                    children: this.props.data
+                };
+
+                path.forEach(function (index, i) {
+                    var cols = _this3._container.querySelectorAll('.fjs-col');
+                    var item = cols[i].querySelectorAll('li')[index];
+                    if (item != undefined) {
+                        itemData = itemData.children[index];
+                        item._item = itemData;
+                        _this3._finder.emit('item-selected', { col: cols[i], item: item });
+                    }
+                });
             }
         }
 

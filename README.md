@@ -48,6 +48,7 @@ disableAutoScroll| Boolean | Disable automatically scrolling to newly created co
 onItemSelected| Function | Callback function when item selected. Parameters: (item, domItem)
 onLeafSelected| Function | Callback function when leaf node selected. Parameters: (item)
 onColumnCreated| Function | Callback function when column is created. Parameters: (domColumn)
+value| Object| Currently selected value. The id property is required for data lookup.
 
 ### Data
 
