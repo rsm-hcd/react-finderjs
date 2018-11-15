@@ -36,7 +36,8 @@ class ReactFinder extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.data !== this.props.data) {
+        if (nextProps.data !== this.props.data ||
+        nextProps.value !== this.props.value) {
             this._componentId = uuidv4.default();
             this._finder = undefined;
         }
