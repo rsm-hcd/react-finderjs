@@ -188,10 +188,11 @@ var ReactFinder = function (_Component) {
                 path.forEach(function (index, i) {
                     var cols = _this3._container.querySelectorAll('.fjs-col');
                     var item = cols[i].querySelectorAll('li')[index];
+                    var container = _this3._container;
                     if (item != undefined) {
                         itemData = itemData.children[index];
                         item._item = itemData;
-                        _this3._finder.emit('item-selected', { col: cols[i], item: item });
+                        _this3._finder.emit('item-selected', { col: cols[i], item: item, container: container });
                     }
                 });
             }
