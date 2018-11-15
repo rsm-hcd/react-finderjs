@@ -36,7 +36,8 @@ class ReactFinder extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.data !== this.props.data) {
+        if (nextProps.data !== this.props.data ||
+        nextProps.value !== this.props.value) {
             this._componentId = uuidv4.default();
             this._finder = undefined;
         }
@@ -143,10 +144,11 @@ class ReactFinder extends Component {
             path.forEach((index, i) => {
                 const cols = this._container.querySelectorAll('.fjs-col');
                 const item = cols[i].querySelectorAll('li')[index];
+                const container = this._container;
                 if (item != undefined) {
                     itemData = itemData.children[index];
                     item._item = itemData;
-                    this._finder.emit('item-selected', { col: cols[i], item: item });
+                    this._finder.emit('item-selected', { col: cols[i], item: item, container: container });
                 }
             })
         }
